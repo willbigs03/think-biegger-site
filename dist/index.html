@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Think Biegger - AI That Does the Repetitive Work</title>
+<meta name="description" content="Think Biegger sets up and runs AI-powered workflows for construction companies. Bid intake, document cleanup, reporting, follow-up, and repetitive admin handled around your existing tools.">
+<meta property="og:title" content="Think Biegger - AI That Does the Repetitive Work">
+<meta property="og:description" content="AI-powered construction admin workflows for bid intake, document cleanup, reporting, follow-up, and repetitive paperwork.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thinkbiegger.com">
+<meta property="og:image" content="https://thinkbiegger.com/think-biegger-og.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#181713">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Geist:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #181713;
+  --bg-warm: #211f19;
+  --bg-card: #29251d;
+  --bg-card-hover: #302a20;
+  --ink: #faf5ed;
+  --cream: #f4eadc;
+  --muted: #b0a696;
+  --soft: #756b5e;
+  --line: rgba(250,245,237,0.1);
+  --line-strong: rgba(212,168,67,0.35);
+  --gold: #d4a843;
+  --gold-soft: #f0c967;
+  --orange: #c8601c;
+  --orange-dark: #a84f15;
+  --green: #7c8a62;
+  --shadow: rgba(0,0,0,0.35);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+::selection { background: var(--gold); color: var(--bg); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 72px;
+  padding: 0 clamp(22px, 4vw, 58px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(24,23,19,0.82);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.brand-bulb {
+  width: 34px;
+  height: 48px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(212,168,67,0.18));
+}
+
+.nav-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--cream); }
+
+.nav-cta {
+  color: var(--bg) !important;
+  background: var(--gold);
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 700 !important;
+  transition: transform 0.18s, background 0.18s;
+}
+
+.nav-cta:hover {
+  background: var(--gold-soft);
+  transform: translateY(-1px);
+}
+
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 5px 0;
+  background: var(--cream);
+}
+
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 24px clamp(22px, 4vw, 58px);
+  background: rgba(24,23,19,0.97);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+}
+
+.nav-mobile.active {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nav-mobile a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  padding: 120px clamp(22px, 4vw, 58px) 74px;
+  overflow: hidden;
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(24,23,19,0.98) 0%, rgba(24,23,19,0.78) 48%, rgba(24,23,19,0.36) 100%),
+    linear-gradient(180deg, rgba(24,23,19,0.15), rgba(24,23,19,0.95)),
+    url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2200&q=80') center right / cover no-repeat;
+  filter: saturate(0.92);
+}
+
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(250,245,237,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250,245,237,0.025) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(90deg, black, transparent 85%);
+  -webkit-mask-image: linear-gradient(90deg, black, transparent 85%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.6s 0.1s forwards;
+}
+
+.hero-tag::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6.2vw, 82px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--cream);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.22s forwards;
+}
+
+.hero h1 em {
+  color: var(--gold-soft);
+  font-style: italic;
+}
+
+.hero-sub {
+  max-width: 590px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.34s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.7s 0.46s forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 16px 30px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--bg);
+  background: var(--gold);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+
+.btn-primary:hover {
+  background: var(--gold-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(212,168,67,0.18);
+}
+
+.btn-primary svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.18s;
+}
+
+.btn-primary:hover svg { transform: translateX(3px); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 54px;
+  color: var(--cream);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+
+.btn-secondary:hover { color: var(--gold-soft); }
+
+.proof-bar {
+  position: relative;
+  z-index: 2;
+  padding: 46px clamp(22px, 4vw, 58px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-warm);
+}
+
+.proof-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+}
+
+.proof-item {
+  padding-left: 20px;
+  border-left: 2px solid rgba(212,168,67,0.42);
+}
+
+.proof-number {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3vw, 42px);
+  line-height: 1;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.proof-label {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+section {
+  position: relative;
+  padding: 100px clamp(22px, 4vw, 58px);
+  scroll-margin-top: 220px;
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.section-label {
+  color: var(--gold-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-heading {
+  max-width: 780px;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.5vw, 56px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--cream);
+  margin-bottom: 22px;
+}
+
+.section-sub {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+  margin-bottom: 56px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.service-card {
+  min-height: 270px;
+  padding: 36px 32px;
+  background: var(--bg-card);
+  transition: background 0.25s;
+}
+
+.service-card:hover { background: var(--bg-card-hover); }
+
+.service-number {
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.65;
+  margin-bottom: 24px;
+}
+
+.service-card h3 {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.service-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.pilot {
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(212,168,67,0.08), transparent 46%),
+    var(--bg-warm);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-top: 86px;
+  padding-bottom: 96px;
+}
+
+.pilot-grid {
+  display: grid;
+  gap: 50px;
+}
+
+.pilot .section-label {
+  color: var(--gold-soft);
+}
+
+.pilot .section-heading {
+  max-width: 600px;
+  color: var(--cream);
+}
+
+.pilot-intro {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.pilot-summary {
+  padding-bottom: 8px;
+}
+
+.pilot-copy p {
+  max-width: none;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.pilot-copy strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.pilot-note {
+  max-width: none;
+  margin-top: 8px;
+  padding: 18px 0 0;
+  border-top: 2px solid rgba(212,168,67,0.24);
+  color: var(--cream);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 56px 46px;
+}
+
+.catalog-item {
+  min-width: 0;
+}
+
+.catalog-icon {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 18px;
+  color: var(--gold);
+}
+
+.catalog-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.catalog-item h3 {
+  color: var(--cream);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.08;
+  margin-bottom: 10px;
+}
+
+.catalog-item p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.catalog-item strong {
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.access {
+  background: var(--bg);
+}
+
+.access-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.access-lead {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.access-lead strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.access-points {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--line);
+}
+
+.access-point {
+  min-height: 150px;
+  padding: 24px 22px;
+  background: var(--bg-card);
+}
+
+.access-point h3 {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.access-point p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.workflow-demo {
+  background:
+    linear-gradient(180deg, rgba(124,138,98,0.08), transparent 42%),
+    var(--bg-warm);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.workflow-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.workflow-list {
+  display: grid;
+  gap: 14px;
+}
+
+.workflow-step {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+
+.workflow-step span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--bg);
+  background: var(--gold);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.workflow-step h3 {
+  color: var(--cream);
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.workflow-step p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.service-model {
+  padding: 34px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(212,168,67,0.1), rgba(41,37,29,0.72));
+}
+
+.service-model h3 {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+
+.service-model ul {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.service-model li {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  padding-left: 22px;
+  position: relative;
+}
+
+.service-model li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.service-model strong {
+  color: var(--cream);
+  font-weight: 700;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 46px;
+}
+
+.step-num {
+  font-family: var(--font-display);
+  color: var(--gold);
+  font-size: 62px;
+  line-height: 1;
+  opacity: 0.25;
+  margin-bottom: 18px;
+}
+
+.step h3 {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.admin-ai {
+  background:
+    linear-gradient(180deg, rgba(212,168,67,0.06), transparent 44%),
+    var(--bg-warm);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.admin-lead {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.admin-lead strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.admin-tools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--line);
+}
+
+.admin-tool {
+  min-height: 138px;
+  padding: 24px 22px;
+  background: var(--bg-card);
+}
+
+.admin-tool h3 {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.admin-tool p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.about {
+  background:
+    linear-gradient(180deg, rgba(124,138,98,0.08), transparent 42%),
+    var(--bg);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.about-text {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+.about-text p + p { margin-top: 20px; }
+
+.about-text strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+.about-list {
+  display: grid;
+  gap: 14px;
+}
+
+.about-item {
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-card);
+}
+
+.about-item h3 {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.about-item p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.about-item a {
+  color: var(--gold-soft);
+  text-decoration: none;
+}
+
+.about-item a:hover { color: var(--cream); }
+
+.contact {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--line);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 58px;
+  align-items: start;
+}
+
+.contact-intro p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 30px;
+}
+
+.contact-direct {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-direct a {
+  color: var(--cream);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.18s;
+}
+
+.contact-direct a:hover { color: var(--gold-soft); }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--soft);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212,168,67,0.12);
+}
+
+.contact-form textarea { min-height: 120px; }
+
+.contact-submit {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 34px clamp(22px, 4vw, 58px);
+  border-top: 1px solid var(--line);
+  color: var(--soft);
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 18px;
+}
+
+.footer-note {
+  font-size: 13px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.62s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.62s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+
+@media (max-width: 980px) {
+  .nav-links { display: none; }
+  .nav-hamburger { display: block; }
+
+  .hero {
+    min-height: auto;
+    padding: 112px 24px 68px;
+  }
+
+  .hero-photo {
+    background:
+      linear-gradient(180deg, rgba(24,23,19,0.88), rgba(24,23,19,0.96)),
+      url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80') center / cover no-repeat;
+  }
+
+ .proof-inner,
+ .services-grid,
+ .steps-grid,
+ .access-grid,
+ .workflow-grid,
+ .admin-grid,
+ .about-grid,
+ .contact-grid {
+ grid-template-columns: 1fr;
+ }
+
+ .pilot-grid,
+ .access-grid,
+ .workflow-grid,
+ .admin-grid,
+ .about-grid,
+ .contact-grid {
+ gap: 42px;
+ }
+
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pilot-intro {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .pilot .section-heading {
+    max-width: 760px;
+  }
+
+  section { padding: 76px 24px; }
+}
+
+@media (max-width: 560px) {
+  .nav-name { font-size: 20px; }
+  .hero h1 { font-size: 43px; }
+  .hero-sub { font-size: 16px; }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .btn-primary,
+  .btn-secondary {
+    justify-content: center;
+    width: 100%;
+  }
+  .proof-bar { padding: 36px 24px; }
+  .proof-inner { gap: 24px; }
+  .section-heading { font-size: 34px; }
+  .service-card { min-height: auto; }
+  .catalog-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+  .catalog-item h3 { font-size: 22px; }
+ .admin-tools { grid-template-columns: 1fr; }
+ .admin-tool { min-height: auto; }
+ .access-points { grid-template-columns: 1fr; }
+ .access-point { min-height: auto; }
+ .service-model { padding: 26px 22px; }
+ .form-row { grid-template-columns: 1fr; }
+ .footer {
+ flex-direction: column;
+ align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Think Biegger",
+ "description": "AI-powered construction admin workflows for bid intake, document cleanup, reporting, follow-up, and repetitive paperwork.",
+  "url": "https://thinkbiegger.com",
+  "email": ["will@thinkbiegger.com", "matt@thinkbiegger.com"],
+  "areaServed": "US",
+  "serviceType": ["AI Automation", "Workflow Automation", "Document Processing", "Construction Technology"]
+}
+</script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#" class="nav-brand" aria-label="Think Biegger home">
+    <svg class="brand-bulb" viewBox="0 0 44 62" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="22" cy="22" r="18" fill="none" stroke="#d4a843" stroke-width="2.5"/>
+      <path d="M16 16 Q18 11 22 10" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <circle cx="22" cy="21" r="3" fill="none" stroke="#d4a843" stroke-width="1.5"/>
+      <line x1="22" y1="24" x2="22" y2="32" stroke="#d4a843" stroke-width="1.5"/>
+      <line x1="18" y1="29" x2="22" y2="24" stroke="#d4a843" stroke-width="1.2"/>
+      <line x1="26" y1="29" x2="22" y2="24" stroke="#d4a843" stroke-width="1.2"/>
+      <rect x="14" y="42" width="16" height="3" rx="1.5" fill="#d4a843"/>
+      <rect x="15" y="46.5" width="14" height="2.5" rx="1.2" fill="#a08e6e"/>
+      <rect x="16.5" y="50.5" width="11" height="2.5" rx="1.2" fill="#d4a843"/>
+      <rect x="18" y="54.5" width="8" height="2" rx="1" fill="#a08e6e"/>
+      <line x1="14" y1="40" x2="14" y2="42" stroke="#d4a843" stroke-width="2"/>
+      <line x1="30" y1="40" x2="30" y2="42" stroke="#d4a843" stroke-width="2"/>
+    </svg>
+    <span class="nav-name">Think Biegger</span>
+  </a>
+ <ul class="nav-links">
+ <li><a href="#work">Options</a></li>
+ <li><a href="#access">Access</a></li>
+ <li><a href="#services">Services</a></li>
+ <li><a href="#workflow">Example</a></li>
+ <li><a href="#how">Process</a></li>
+ <li><a href="#about">About</a></li>
+ <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleMobile()" aria-label="Toggle menu" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobileNav">
+ <a href="#work" onclick="closeMobile()">Options</a>
+ <a href="#access" onclick="closeMobile()">Access</a>
+ <a href="#services" onclick="closeMobile()">Services</a>
+ <a href="#workflow" onclick="closeMobile()">Example</a>
+ <a href="#how" onclick="closeMobile()">Process</a>
+ <a href="#about" onclick="closeMobile()">About</a>
+ <a href="#contact" onclick="closeMobile()">Get Started</a>
+</div>
+
+<section class="hero">
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-tag">AI Automation for Construction</div>
+    <h1>Construction teams lose hours to busy work. <em>We build the solution that gives it back.</em></h1>
+    <p class="hero-sub">We set up and run AI-powered workflows for construction companies: bid intake, document cleanup, daily reports, follow-ups, and admin work that should not eat your team's day. Your people keep the judgment calls. The system handles the routine work.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">
+        Tell us what's slow
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/>
+        </svg>
+      </a>
+      <a href="#work" class="btn-secondary">See automation options</a>
+    </div>
+  </div>
+</section>
+
+<div class="proof-bar">
+  <div class="proof-inner">
+    <div class="proof-item reveal">
+      <div class="proof-number">Days to hours</div>
+      <div class="proof-label">Save countless hours on first-draft bid prep and repetitive construction admin.</div>
+    </div>
+    <div class="proof-item reveal reveal-d1">
+      <div class="proof-number">100%</div>
+      <div class="proof-label">Human review on every output. AI drafts, your team decides.</div>
+    </div>
+    <div class="proof-item reveal reveal-d2">
+      <div class="proof-number">You own it</div>
+      <div class="proof-label">Every system is built around your tools, files, and approval process.</div>
+    </div>
+  </div>
+</div>
+
+<section class="pilot" id="work">
+  <div class="container pilot-grid">
+    <div class="pilot-copy pilot-intro">
+      <div class="pilot-title">
+        <div class="section-label">Automation Catalog</div>
+        <h2 class="section-heading">Pick a workflow. We set it up, run it, and keep it moving.</h2>
+      </div>
+      <div class="pilot-summary">
+        <p>Use this catalog as a starting point. Choose one of the automations below, or bring us the slow process your team is stuck doing by hand.</p>
+        <p>Each option can connect to the tools your team already uses: Word, Excel, email, Teams, RMS, shared folders, PDFs, forms, and project trackers.</p>
+        <div class="pilot-note">You do not need to know what AI tool to buy or which agent runs in the background. Your team sends work through normal channels. We handle the workflow behind it.</div>
+      </div>
+    </div>
+
+    <div class="catalog-grid" aria-label="Automation catalog options">
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 6h14l8 8v28H14z"/>
+            <path d="M28 6v9h8"/>
+            <path d="M20 24h16"/>
+            <path d="M20 31h12"/>
+          </svg>
+        </div>
+        <h3>Document intake</h3>
+        <p>RFQs, specs, contracts, photos, reports, and PDFs read, sorted, summarized, and routed.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="21" cy="21" r="11"/>
+            <path d="m30 30 10 10"/>
+            <path d="m16 21 4 4 7-8"/>
+          </svg>
+        </div>
+        <h3>Bid intake</h3>
+        <p>Bid docs turned into key dates, scope notes, requirements, missing items, and review tasks.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="10" y="6" width="28" height="36" rx="3"/>
+            <path d="M17 15h14"/>
+            <path d="M17 24h2"/>
+            <path d="M24 24h2"/>
+            <path d="M31 24h2"/>
+            <path d="M17 31h2"/>
+            <path d="M24 31h2"/>
+            <path d="M31 31h2"/>
+          </svg>
+        </div>
+        <h3>Estimate prep</h3>
+        <p>First-draft estimate packages with quantity notes, assumptions, forms, and review checklists.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 23a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+            <path d="M31 22a6 6 0 1 0 0-12"/>
+            <path d="M6 40c2-8 7-12 11-12s9 4 11 12"/>
+            <path d="M28 31c5 .5 9 4 11 9"/>
+          </svg>
+        </div>
+        <h3>Sub outreach</h3>
+        <p>Trade matching, call sheets, preview emails, response tracking, and follow-up lists.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 11h26v30H11z"/>
+            <path d="M17 7v8"/>
+            <path d="M31 7v8"/>
+            <path d="M17 24h14"/>
+            <path d="M17 31h10"/>
+          </svg>
+        </div>
+        <h3>Daily reports</h3>
+        <p>Field notes, photos, weather, manpower, equipment, and issues shaped into clean reports.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 12h28v24H10z"/>
+            <path d="M16 19h16"/>
+            <path d="M16 26h10"/>
+            <path d="M15 40h18"/>
+            <path d="M24 36v4"/>
+          </svg>
+        </div>
+        <h3>Meeting notes</h3>
+        <p>Agendas, meeting minutes, decisions, action items, owners, and due dates organized.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="7" y="12" width="34" height="24" rx="3"/>
+            <path d="m8 15 16 13 16-13"/>
+            <path d="M34 36v6"/>
+            <path d="M29 39h10"/>
+          </svg>
+        </div>
+        <h3>Email drafting</h3>
+        <p>Project-aware emails for subs, vendors, owners, internal updates, and follow-ups.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11h12v12H9z"/>
+            <path d="M27 11h12v12H27z"/>
+            <path d="M9 29h12v8H9z"/>
+            <path d="M27 29h12v8H27z"/>
+            <path d="M21 17h6"/>
+            <path d="M21 33h6"/>
+          </svg>
+        </div>
+        <h3>Data entry cleanup</h3>
+        <p>Information moved from emails, PDFs, and forms into spreadsheets or trackers automatically.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 26a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z"/>
+            <path d="M8 40c2-7 6-10 8-10s6 3 8 10"/>
+            <path d="M32 14v14"/>
+            <path d="M25 21h14"/>
+          </svg>
+        </div>
+        <h3>Lead intake</h3>
+        <p>New requests captured, qualified, routed, scheduled, and followed up without manual chasing.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 10h24v28H12z"/>
+            <path d="M18 17h12"/>
+            <path d="M18 24h9"/>
+            <path d="M18 31h13"/>
+            <path d="M34 14l4-4"/>
+            <path d="M10 38l4-4"/>
+          </svg>
+        </div>
+        <h3>Project memory</h3>
+        <p>A running record of contacts, commitments, decisions, documents, and next steps.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 14h9"/>
+            <path d="M10 24h16"/>
+            <path d="M10 34h12"/>
+            <circle cx="34" cy="14" r="4"/>
+            <circle cx="34" cy="34" r="4"/>
+            <path d="M34 18v12"/>
+          </svg>
+        </div>
+        <h3>Response tracking</h3>
+        <p>Calls, emails, replies, no responses, and next follow-ups kept visible in one place.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 36h32"/>
+            <path d="M13 36V22"/>
+            <path d="M24 36V12"/>
+            <path d="M35 36V18"/>
+            <path d="M10 10h28"/>
+          </svg>
+        </div>
+        <h3>Dashboards</h3>
+        <p>Master views for bids, projects, admin tasks, open items, deadlines, and owner updates.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 7h24v34H12z"/>
+            <path d="M18 16h12"/>
+            <path d="M18 24h12"/>
+            <path d="M18 32h7"/>
+            <path d="M32 30l4 4 6-8"/>
+          </svg>
+        </div>
+        <h3>Form filling</h3>
+        <p>Standard forms, bid forms, logs, templates, and recurring documents drafted from source files.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 8h24v32H12z"/>
+            <path d="M18 16h12"/>
+            <path d="M18 24h12"/>
+            <path d="M18 32h5"/>
+            <path d="M31 31c0 2 2 3 4 3s4-1 4-3-2-3-4-3-4-1-4-3 2-3 4-3 4 1 4 3"/>
+            <path d="M35 20v18"/>
+          </svg>
+        </div>
+        <h3>Invoice prep</h3>
+        <p>Tickets, quantities, backup docs, approvals, and draft pay-app support organized for review.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 18h24v18H8z"/>
+            <path d="M32 24h6l4 5v7H32z"/>
+            <path d="M14 36a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/>
+            <path d="M36 36a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/>
+            <path d="M13 12h14"/>
+          </svg>
+        </div>
+        <h3>Material logs</h3>
+        <p>Vendor quotes, delivery notes, work orders, purchase requests, and material status tracked.</p>
+      </div>
+
+      <div class="catalog-item">
+        <div class="catalog-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 14h32v22H8z"/>
+            <path d="M14 20h12"/>
+            <path d="M14 27h8"/>
+            <path d="M30 24h6"/>
+            <path d="M33 21v6"/>
+            <path d="M12 40h24"/>
+          </svg>
+        </div>
+        <h3>Owner updates</h3>
+        <p>Progress summaries, photo notes, schedule updates, and clean status emails drafted fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="access" id="access">
+  <div class="container access-grid">
+    <div class="reveal">
+      <div class="section-label">How your team uses it</div>
+      <h2 class="section-heading">No new platform to babysit. Just simple places to send work.</h2>
+      <p class="access-lead"><strong>We hide the technical parts.</strong> Your team keeps using email, shared folders, Teams, spreadsheets, and the systems already in place. Think Biegger becomes the managed layer that catches the repetitive work, routes it, drafts it, and brings it back for review.</p>
+    </div>
+
+    <div class="access-points reveal reveal-d1" aria-label="Client access options">
+      <div class="access-point">
+        <h3>Forward an email</h3>
+        <p>Send RFQs, owner notes, sub replies, invoices, and paperwork to a dedicated inbox.</p>
+      </div>
+      <div class="access-point">
+        <h3>Drop in files</h3>
+        <p>Upload PDFs, photos, specs, forms, and reports to a shared folder the workflow watches.</p>
+      </div>
+      <div class="access-point">
+        <h3>Fill a short form</h3>
+        <p>Start repeatable workflows like bid intake, change orders, meeting notes, or daily reports.</p>
+      </div>
+      <div class="access-point">
+        <h3>Review the output</h3>
+        <p>Your team gets summaries, drafts, checklists, and next steps before anything is sent or submitted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="workflow-demo" id="workflow">
+  <div class="container workflow-grid">
+    <div class="reveal">
+      <div class="section-label">Example workflow</div>
+      <h2 class="section-heading">A bid package comes in. The busy work moves without waiting on your estimator.</h2>
+      <div class="service-model">
+        <h3>Built as a service, not a software chore.</h3>
+        <ul>
+          <li><strong>Setup:</strong> we map the workflow, connect the tools, and build the first automation.</li>
+          <li><strong>Run:</strong> your team sends work through email, folders, forms, or Teams.</li>
+          <li><strong>Support:</strong> we monitor, adjust, and improve the workflow as your process changes.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="workflow-list reveal reveal-d1" aria-label="Bid intake workflow example">
+      <div class="workflow-step">
+        <span>01</span>
+        <div>
+          <h3>Bid docs arrive</h3>
+          <p>Your team forwards the email or drops the package into a shared folder.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <span>02</span>
+        <div>
+          <h3>The system reads and sorts</h3>
+          <p>Specs, forms, dates, scope notes, missing files, and requirements get pulled out.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <span>03</span>
+        <div>
+          <h3>Your team gets a clean review pack</h3>
+          <p>Summary, risk flags, compliance checklist, questions, and estimating prep land in one place.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <span>04</span>
+        <div>
+          <h3>Drafts are prepared for approval</h3>
+          <p>Proposal language, emails, forms, and next actions are drafted. Your team edits and decides.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container">
+    <div class="section-label reveal">What We Build</div>
+    <h2 class="section-heading reveal">AI workflows that handle the work your team shouldn't be doing.</h2>
+    <p class="section-sub reveal">Every construction company has processes that are manual, repetitive, and time-sensitive. We turn those processes into managed workflows so your people can focus on pricing, scheduling, field decisions, and relationships.</p>
+
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-number">01</div>
+        <h3>Document Intake</h3>
+        <p>Upload messy files: RFQs, contracts, reports, permits. The system reads them, pulls what matters, and organizes it for your team.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">02</div>
+        <h3>Estimating &amp; Bid Prep</h3>
+        <p>Turn bid packages into draft estimates with extracted quantities, wage floors, and filled forms. Your estimator reviews, not rebuilds from scratch.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-number">03</div>
+        <h3>Daily Reports &amp; RMS Support</h3>
+        <p>Jobsite notes in. RMS-ready daily report out. Weather, photos, and field notes turned into clean construction reporting.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="admin-ai" id="admin-ai">
+  <div class="container admin-grid">
+    <div class="reveal">
+      <div class="section-label">Construction Admin AI</div>
+      <h2 class="section-heading">An AI assistant that remembers the project, the people, and the paperwork.</h2>
+      <p class="admin-lead"><strong>Built around the way small construction teams already work:</strong> Word, Excel, email, Teams, and RMS. The goal is not another dashboard to babysit. The goal is a system that keeps the admin work moving while your team stays focused on the job.</p>
+    </div>
+
+    <div class="admin-tools reveal reveal-d1" aria-label="Construction Admin AI capabilities">
+      <div class="admin-tool">
+        <h3>Bid intake</h3>
+        <p>Summaries, key dates, scope tags, estimating support, and missing-info checklists.</p>
+      </div>
+      <div class="admin-tool">
+        <h3>Sub outreach</h3>
+        <p>Trade matching, call sheets, preview emails, follow-up status, and response tracking.</p>
+      </div>
+      <div class="admin-tool">
+        <h3>Daily reports</h3>
+        <p>Weather, photos, voice notes, and field updates shaped into clean daily reports.</p>
+      </div>
+      <div class="admin-tool">
+        <h3>Meeting notes</h3>
+        <p>Agendas, minutes, action items, decision logs, and project memory in one place.</p>
+      </div>
+      <div class="admin-tool">
+        <h3>Email drafting</h3>
+        <p>Project-aware emails for subs, owners, vendors, and internal follow-up.</p>
+      </div>
+      <div class="admin-tool">
+        <h3>Project memory</h3>
+        <p>A running record of people, paperwork, decisions, commitments, and next steps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-label reveal">Process</div>
+    <h2 class="section-heading reveal">Three steps. Simple for your team, managed by ours.</h2>
+    <p class="section-sub reveal">We build the workflow around how your company already works. You can own the finished system, or keep us on to host, monitor, and improve it.</p>
+
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <h3>You tell us what's slow</h3>
+        <p>We look at where your team spends time on repetitive work and find the highest-leverage automation: the one that pays for itself first.</p>
+      </div>
+      <div class="step reveal reveal-d1">
+        <div class="step-num">02</div>
+        <h3>We build the system</h3>
+        <p>Custom workflow, built around how your team already works. It runs inside your operation, with no new platforms to learn.</p>
+      </div>
+      <div class="step reveal reveal-d2">
+        <div class="step-num">03</div>
+        <h3>We run and refine it</h3>
+        <p>Less manual work, fewer missed details, faster turnaround. We keep the workflow useful while your people handle the decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-text reveal">
+      <div class="section-label">About</div>
+      <h2 class="section-heading">Two brothers combining construction experience with practical IT.</h2>
+      <p><strong>Think Biegger is run by Will and Matt Biegger.</strong> Will understands construction paperwork, field coordination, bid prep, and the admin work that slows projects down. Matt brings the IT side: systems, tools, workflow setup, and the technical details that keep automations reliable.</p>
+      <p>Together, we build AI-powered workflows that make sense in the real world. Not complicated software your team has to babysit. Useful systems that help with the repeat work so construction teams can spend more time on the job and less time chasing paperwork.</p>
+    </div>
+
+    <div class="about-list reveal reveal-d1">
+      <div class="about-item">
+        <h3>Construction side</h3>
+        <p>Field operations, project paperwork, bid prep, daily reporting, and the workflows that need to move faster.</p>
+      </div>
+      <div class="about-item">
+        <h3>Technology side</h3>
+        <p>IT experience, systems support, automation setup, and the technical structure behind reliable workflows.</p>
+      </div>
+      <div class="about-item">
+        <h3>Shared focus</h3>
+        <p>Simple tools that reduce repetitive admin work without replacing the judgment of the people running the job.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-intro reveal">
+      <div class="section-label">Get started</div>
+      <h2 class="section-heading">Tell us what's eating your team's time.</h2>
+      <p>Send us the process that's slow, manual, or repetitive. We'll tell you if AI can handle it and what the build looks like.</p>
+      <div class="contact-direct">
+        <a href="mailto:will@thinkbiegger.com">will@thinkbiegger.com</a>
+        <a href="mailto:matt@thinkbiegger.com">matt@thinkbiegger.com</a>
+      </div>
+    </div>
+
+    <form class="contact-form reveal reveal-d1" id="contactForm">
+      <div class="form-row">
+        <div>
+          <label for="name" class="sr-only">Name</label>
+          <input id="name" type="text" name="name" placeholder="Name" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="company" class="sr-only">Company</label>
+          <input id="company" type="text" name="company" placeholder="Company" autocomplete="organization" required>
+        </div>
+      </div>
+      <label for="email" class="sr-only">Email</label>
+      <input id="email" type="email" name="email" placeholder="Email" autocomplete="email" required>
+      <label for="message" class="sr-only">What process is eating your time?</label>
+      <textarea id="message" name="message" placeholder="What process is eating your time?"></textarea>
+      <button type="submit" class="btn-primary contact-submit">Send It</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">Think Biegger</div>
+  <div class="footer-note">Pronounced "Bigger"</div>
+</footer>
+
+<script>
+const mobileNav = document.getElementById('mobileNav');
+const hamburger = document.querySelector('.nav-hamburger');
+
+function toggleMobile() {
+  const open = mobileNav.classList.toggle('active');
+  hamburger.setAttribute('aria-expanded', open);
+}
+
+function closeMobile() {
+  mobileNav.classList.remove('active');
+  hamburger.setAttribute('aria-expanded', 'false');
+}
+
+const contactForm = document.getElementById('contactForm');
+
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(contactForm);
+  const name = formData.get('name') || '';
+  const company = formData.get('company') || '';
+  const email = formData.get('email') || '';
+  const message = formData.get('message') || '';
+  const subject = `Think Biegger inquiry from ${company}`;
+  const body = [
+    `Name: ${name}`,
+    `Company: ${company}`,
+    `Email: ${email}`,
+    '',
+    'Process eating time:',
+    message
+  ].join('\n');
+
+  window.location.href = `mailto:will@thinkbiegger.com,matt@thinkbiegger.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

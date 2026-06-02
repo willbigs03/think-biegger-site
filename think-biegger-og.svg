@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="ogDots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="0.8" fill="#ffffff" opacity="0.06"/>
+    </pattern>
+    <radialGradient id="ogGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#d4a843" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ogLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4a843" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#d4a843" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#d4a843" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <rect width="1200" height="630" fill="url(#ogDots)"/>
+  <rect width="1200" height="630" fill="url(#ogGlow)"/>
+
+  <!-- Accent line -->
+  <line x1="200" y1="340" x2="1000" y2="340" stroke="url(#ogLine)" stroke-width="1"/>
+
+  <!-- Brand name -->
+  <text x="600" y="260" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="800" font-size="72" letter-spacing="-3" fill="#ffffff">THINK BIEGGER</text>
+
+  <!-- Tagline -->
+  <text x="600" y="400" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="400" font-size="22" fill="#a0a0a0">AI Automation for Construction</text>
+
+  <!-- URL -->
+  <text x="600" y="460" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-weight="500" font-size="16" fill="#d4a843">thinkbiegger.com</text>
+</svg>
