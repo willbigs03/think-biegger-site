@@ -393,48 +393,6 @@ section {
   margin-bottom: 56px;
 }
 
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.service-card {
-  min-height: 270px;
-  padding: 36px 32px;
-  background: var(--bg-card);
-  transition: background 0.25s;
-}
-
-.service-card:hover { background: var(--bg-card-hover); }
-
-.service-number {
-  font-family: var(--font-display);
-  font-size: 34px;
-  line-height: 1;
-  color: var(--gold);
-  opacity: 0.65;
-  margin-bottom: 24px;
-}
-
-.service-card h3 {
-  font-family: var(--font-display);
-  font-size: 25px;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 12px;
-}
-
-.service-card p {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.7;
-}
-
 .pilot {
   color: var(--ink);
   background:
@@ -691,35 +649,6 @@ section {
   font-weight: 700;
 }
 
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 46px;
-}
-
-.step-num {
-  font-family: var(--font-display);
-  color: var(--gold);
-  font-size: 62px;
-  line-height: 1;
-  opacity: 0.25;
-  margin-bottom: 18px;
-}
-
-.step h3 {
-  font-family: var(--font-display);
-  font-size: 25px;
-  font-weight: 400;
-  color: var(--cream);
-  margin-bottom: 12px;
-}
-
-.step p {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.7;
-}
-
 .admin-ai {
   background:
     linear-gradient(180deg, rgba(212,168,67,0.06), transparent 44%),
@@ -970,8 +899,6 @@ section {
   }
 
  .proof-inner,
- .services-grid,
- .steps-grid,
  .access-grid,
  .workflow-grid,
  .admin-grid,
@@ -1022,7 +949,6 @@ section {
   .proof-bar { padding: 36px 24px; }
   .proof-inner { gap: 24px; }
   .section-heading { font-size: 34px; }
-  .service-card { min-height: auto; }
   .catalog-grid {
     grid-template-columns: 1fr;
     gap: 38px;
@@ -1089,9 +1015,7 @@ section {
  <ul class="nav-links">
  <li><a href="#work">Options</a></li>
  <li><a href="#access">Access</a></li>
- <li><a href="#services">Services</a></li>
  <li><a href="#workflow">Example</a></li>
- <li><a href="#how">Process</a></li>
  <li><a href="#about">About</a></li>
  <li><a href="#contact" class="nav-cta">Get Started</a></li>
   </ul>
@@ -1105,9 +1029,7 @@ section {
 <div class="nav-mobile" id="mobileNav">
  <a href="#work" onclick="closeMobile()">Options</a>
  <a href="#access" onclick="closeMobile()">Access</a>
- <a href="#services" onclick="closeMobile()">Services</a>
  <a href="#workflow" onclick="closeMobile()">Example</a>
- <a href="#how" onclick="closeMobile()">Process</a>
  <a href="#about" onclick="closeMobile()">About</a>
  <a href="#contact" onclick="closeMobile()">Get Started</a>
 </div>
@@ -1469,32 +1391,6 @@ section {
   </div>
 </section>
 
-<section id="services">
-  <div class="container">
-    <div class="section-label reveal">What We Build</div>
-    <h2 class="section-heading reveal">AI workflows that handle the work your team shouldn't be doing.</h2>
-    <p class="section-sub reveal">Every construction company has processes that are manual, repetitive, and time-sensitive. We turn those processes into managed workflows so your people can focus on pricing, scheduling, field decisions, and relationships.</p>
-
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <div class="service-number">01</div>
-        <h3>Document Intake</h3>
-        <p>Upload messy files: RFQs, contracts, reports, permits. The system reads them, pulls what matters, and organizes it for your team.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-number">02</div>
-        <h3>Estimating &amp; Bid Prep</h3>
-        <p>Turn bid packages into draft estimates with extracted quantities, wage floors, and filled forms. Your estimator reviews, not rebuilds from scratch.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-number">03</div>
-        <h3>Daily Reports &amp; RMS Support</h3>
-        <p>Jobsite notes in. RMS-ready daily report out. Weather, photos, and field notes turned into clean construction reporting.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="admin-ai" id="admin-ai">
   <div class="container admin-grid">
     <div class="reveal">
@@ -1532,38 +1428,13 @@ section {
   </div>
 </section>
 
-<section id="how">
-  <div class="container">
-    <div class="section-label reveal">Process</div>
-    <h2 class="section-heading reveal">Three steps. Simple for your team, managed by ours.</h2>
-    <p class="section-sub reveal">We build the workflow around how your company already works. You can own the finished system, or keep us on to host, monitor, and improve it.</p>
-
-    <div class="steps-grid">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <h3>You tell us what's slow</h3>
-        <p>We look at where your team spends time on repetitive work and find the highest-leverage automation: the one that pays for itself first.</p>
-      </div>
-      <div class="step reveal reveal-d1">
-        <div class="step-num">02</div>
-        <h3>We build the system</h3>
-        <p>Custom workflow, built around how your team already works. It runs inside your operation, with no new platforms to learn.</p>
-      </div>
-      <div class="step reveal reveal-d2">
-        <div class="step-num">03</div>
-        <h3>We run and refine it</h3>
-        <p>Less manual work, fewer missed details, faster turnaround. We keep the workflow useful while your people handle the decisions.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="about" id="about">
   <div class="container about-grid">
     <div class="about-text reveal">
       <div class="section-label">About</div>
       <h2 class="section-heading">Two brothers combining construction and tech experience.</h2>
       <p><strong>Think Biegger is run by Will and Matt Biegger.</strong> Together, we build AI-powered workflows that make sense in the real world: not complicated software your team has to babysit, but useful systems that help with repeat work so construction teams can spend more time on the job and less time chasing paperwork.</p>
+      <p>We map the slowest process, build the automation around how your team already works, and keep it running as the jobs change.</p>
     </div>
 
     <div class="about-list reveal reveal-d1">
