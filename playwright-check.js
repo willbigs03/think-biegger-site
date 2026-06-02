@@ -54,7 +54,7 @@ async function main() {
       const checks = {
         nav: await page.locator('.nav').isVisible(),
         access: Boolean(await page.locator('#access').boundingBox()),
-        workflow: Boolean(await page.locator('#workflow').boundingBox()),
+        build: Boolean(await page.locator('#build').boundingBox()),
         horizontalOverflow: await page.evaluate(
           () => document.documentElement.scrollWidth > window.innerWidth + 1
         ),
@@ -71,7 +71,7 @@ async function main() {
       });
       await page.close();
 
-      if (!checks.nav || !checks.access || !checks.workflow || checks.horizontalOverflow || checks.brokenAnchors.length) {
+      if (!checks.nav || !checks.access || !checks.build || checks.horizontalOverflow || checks.brokenAnchors.length) {
         throw new Error(`${name} failed checks: ${JSON.stringify(checks)}`);
       }
 

@@ -555,15 +555,27 @@ section {
   border-bottom: 1px solid var(--line);
 }
 
-.workflow-grid {
+.build-stack {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 58px;
-  align-items: start;
+  gap: 56px;
+}
+
+.build-intro {
+  max-width: 880px;
+}
+
+.build-block-title {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: 22px;
 }
 
 .workflow-list {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -603,65 +615,12 @@ section {
   line-height: 1.6;
 }
 
-.service-model {
-  padding: 34px;
-  border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(212,168,67,0.1), rgba(41,37,29,0.72));
-}
-
-.service-model h3 {
-  color: var(--cream);
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: 18px;
-}
-
-.service-model ul {
-  display: grid;
-  gap: 12px;
-  list-style: none;
-}
-
-.service-model li {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.6;
-  padding-left: 22px;
-  position: relative;
-}
-
-.service-model li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.7em;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.service-model strong {
-  color: var(--cream);
-  font-weight: 700;
-}
-
 .admin-ai {
   background:
     linear-gradient(180deg, rgba(212,168,67,0.06), transparent 44%),
     var(--bg-warm);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-}
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 58px;
-  align-items: start;
 }
 
 .admin-lead {
@@ -900,8 +859,6 @@ section {
 
  .proof-inner,
  .access-grid,
- .workflow-grid,
- .admin-grid,
  .about-grid,
  .contact-grid {
  grid-template-columns: 1fr;
@@ -909,8 +866,6 @@ section {
 
  .pilot-grid,
  .access-grid,
- .workflow-grid,
- .admin-grid,
  .about-grid,
  .contact-grid {
  gap: 42px;
@@ -956,9 +911,11 @@ section {
   .catalog-item h3 { font-size: 22px; }
  .admin-tools { grid-template-columns: 1fr; }
  .admin-tool { min-height: auto; }
+ .workflow-list { grid-template-columns: 1fr; }
  .access-points { grid-template-columns: 1fr; }
  .access-point { min-height: auto; }
- .service-model { padding: 26px 22px; }
+ .build-block-title { font-size: 22px; }
+ .build-stack { gap: 42px; }
  .form-row { grid-template-columns: 1fr; }
  .footer {
  flex-direction: column;
@@ -1015,7 +972,7 @@ section {
  <ul class="nav-links">
  <li><a href="#work">Options</a></li>
  <li><a href="#access">Access</a></li>
- <li><a href="#workflow">Example</a></li>
+ <li><a href="#build">Build</a></li>
  <li><a href="#about">About</a></li>
  <li><a href="#contact" class="nav-cta">Get Started</a></li>
   </ul>
@@ -1029,7 +986,7 @@ section {
 <div class="nav-mobile" id="mobileNav">
  <a href="#work" onclick="closeMobile()">Options</a>
  <a href="#access" onclick="closeMobile()">Access</a>
- <a href="#workflow" onclick="closeMobile()">Example</a>
+ <a href="#build" onclick="closeMobile()">Build</a>
  <a href="#about" onclick="closeMobile()">About</a>
  <a href="#contact" onclick="closeMobile()">Get Started</a>
 </div>
@@ -1343,86 +1300,75 @@ section {
   </div>
 </section>
 
-<section class="workflow-demo" id="workflow">
-  <div class="container workflow-grid">
-    <div class="reveal">
-      <div class="section-label">Example workflow</div>
-      <h2 class="section-heading">A bid package comes in. The busy work moves without waiting on your estimator.</h2>
-      <div class="service-model">
-        <h3>Built as a service, not a software chore.</h3>
-        <ul>
-          <li><strong>Setup:</strong> we map the workflow, connect the tools, and build the first automation.</li>
-          <li><strong>Run:</strong> your team sends work through email, text, folders, forms, Teams, RMS, or the tools already in the job flow.</li>
-          <li><strong>Support:</strong> we monitor, adjust, and improve the workflow as your process changes.</li>
-        </ul>
+<section class="admin-ai" id="build">
+  <div class="container build-stack">
+    <div class="reveal build-intro">
+      <div class="section-label">Example real build</div>
+      <h2 class="section-heading">Construction Admin AI: an assistant that remembers the project, the people, and the paperwork.</h2>
+      <p class="admin-lead"><strong>Built around the way small construction teams already work:</strong> Word, Excel, email, Teams, text messages, RMS, shared drives, forms, photos, PDFs, and project trackers. The goal is not another dashboard to babysit &mdash; it is a system that keeps the admin work moving while your team stays focused on the job.</p>
+    </div>
+
+    <div class="reveal reveal-d1 build-block">
+      <h3 class="build-block-title">Inside it: a bid package comes in, and the busy work moves without waiting on your estimator.</h3>
+      <div class="workflow-list" aria-label="Bid intake workflow example">
+        <div class="workflow-step">
+          <span>01</span>
+          <div>
+            <h3>Bid docs arrive</h3>
+            <p>Your team forwards the email, drops the package into a shared folder, or lets the workflow watch the place bid files already land.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span>02</span>
+          <div>
+            <h3>The system reads and sorts</h3>
+            <p>Specs, forms, dates, scope notes, missing files, and requirements get pulled out.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span>03</span>
+          <div>
+            <h3>Your team gets a clean review pack</h3>
+            <p>Summary, risk flags, compliance checklist, questions, and estimating prep land in one place.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span>04</span>
+          <div>
+            <h3>Drafts are prepared for approval</h3>
+            <p>Proposal language, emails, forms, and next actions are drafted. Your team edits and decides.</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="workflow-list reveal reveal-d1" aria-label="Bid intake workflow example">
-      <div class="workflow-step">
-        <span>01</span>
-        <div>
-          <h3>Bid docs arrive</h3>
-          <p>Your team forwards the email, drops the package into a shared folder, or lets the workflow watch the place bid files already land.</p>
+    <div class="reveal reveal-d2 build-block">
+      <h3 class="build-block-title">The same build also handles:</h3>
+      <div class="admin-tools" aria-label="Construction Admin AI capabilities">
+        <div class="admin-tool">
+          <h3>Sub outreach</h3>
+          <p>Trade matching, call sheets, preview emails, follow-up status, and response tracking.</p>
         </div>
-      </div>
-      <div class="workflow-step">
-        <span>02</span>
-        <div>
-          <h3>The system reads and sorts</h3>
-          <p>Specs, forms, dates, scope notes, missing files, and requirements get pulled out.</p>
+        <div class="admin-tool">
+          <h3>Daily reports</h3>
+          <p>Weather, photos, voice notes, and field updates shaped into clean daily reports.</p>
         </div>
-      </div>
-      <div class="workflow-step">
-        <span>03</span>
-        <div>
-          <h3>Your team gets a clean review pack</h3>
-          <p>Summary, risk flags, compliance checklist, questions, and estimating prep land in one place.</p>
+        <div class="admin-tool">
+          <h3>Meeting notes</h3>
+          <p>Agendas, minutes, action items, decision logs, and project memory in one place.</p>
         </div>
-      </div>
-      <div class="workflow-step">
-        <span>04</span>
-        <div>
-          <h3>Drafts are prepared for approval</h3>
-          <p>Proposal language, emails, forms, and next actions are drafted. Your team edits and decides.</p>
+        <div class="admin-tool">
+          <h3>Email drafting</h3>
+          <p>Project-aware emails for subs, owners, vendors, and internal follow-up.</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="admin-ai" id="admin-ai">
-  <div class="container admin-grid">
-    <div class="reveal">
-      <div class="section-label">Construction Admin AI</div>
-      <h2 class="section-heading">An AI assistant that remembers the project, the people, and the paperwork.</h2>
-      <p class="admin-lead"><strong>Built around the way small construction teams already work:</strong> Word, Excel, email, Teams, text messages, RMS, shared drives, forms, photos, PDFs, and project trackers. The goal is not another dashboard to babysit. The goal is a system that keeps the admin work moving while your team stays focused on the job.</p>
-    </div>
-
-    <div class="admin-tools reveal reveal-d1" aria-label="Construction Admin AI capabilities">
-      <div class="admin-tool">
-        <h3>Bid intake</h3>
-        <p>Summaries, key dates, scope tags, estimating support, and missing-info checklists.</p>
-      </div>
-      <div class="admin-tool">
-        <h3>Sub outreach</h3>
-        <p>Trade matching, call sheets, preview emails, follow-up status, and response tracking.</p>
-      </div>
-      <div class="admin-tool">
-        <h3>Daily reports</h3>
-        <p>Weather, photos, voice notes, and field updates shaped into clean daily reports.</p>
-      </div>
-      <div class="admin-tool">
-        <h3>Meeting notes</h3>
-        <p>Agendas, minutes, action items, decision logs, and project memory in one place.</p>
-      </div>
-      <div class="admin-tool">
-        <h3>Email drafting</h3>
-        <p>Project-aware emails for subs, owners, vendors, and internal follow-up.</p>
-      </div>
-      <div class="admin-tool">
-        <h3>Project memory</h3>
-        <p>A running record of people, paperwork, decisions, commitments, and next steps.</p>
+        <div class="admin-tool">
+          <h3>Project memory</h3>
+          <p>A running record of people, paperwork, decisions, commitments, and next steps.</p>
+        </div>
+        <div class="admin-tool">
+          <h3>Change orders</h3>
+          <p>Draft language, cost &amp; schedule impact notes, and routing for approvals.</p>
+        </div>
       </div>
     </div>
   </div>
