@@ -191,23 +191,44 @@ body {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background: var(--bg);
+  filter: saturate(0.92);
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  z-index: 0;
+}
+
+.hero-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   background:
     linear-gradient(90deg, rgba(24,23,19,0.98) 0%, rgba(24,23,19,0.78) 48%, rgba(24,23,19,0.36) 100%),
-    linear-gradient(180deg, rgba(24,23,19,0.15), rgba(24,23,19,0.95)),
-    url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2200&q=80') center right / cover no-repeat;
-  filter: saturate(0.92);
+    linear-gradient(180deg, rgba(24,23,19,0.15), rgba(24,23,19,0.95));
+  pointer-events: none;
 }
 
 .hero-photo::after {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 2;
   background-image:
     linear-gradient(rgba(250,245,237,0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(250,245,237,0.025) 1px, transparent 1px);
   background-size: 120px 120px;
   mask-image: linear-gradient(90deg, black, transparent 85%);
   -webkit-mask-image: linear-gradient(90deg, black, transparent 85%);
+  pointer-events: none;
 }
 
 .hero-content {
@@ -1052,9 +1073,10 @@ section {
 
   .hero-photo {
     background:
-      linear-gradient(180deg, rgba(24,23,19,0.88), rgba(24,23,19,0.96)),
-      url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=80') center / cover no-repeat;
+      var(--bg) url('/videos/construction-hero-poster.jpg') center / cover no-repeat;
   }
+
+  .hero-video { display: none; }
 
  .proof-inner,
  .access-grid,
@@ -1197,7 +1219,11 @@ section {
 </div>
 
 <section class="hero">
-  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-photo" aria-hidden="true">
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="/videos/construction-hero-poster.jpg">
+      <source src="/videos/construction-hero.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-content">
     <div class="hero-tag">AI Automation for Construction</div>
     <h1>Construction teams lose hours to busy work. <em>We build the solution that gives it back.</em></h1>

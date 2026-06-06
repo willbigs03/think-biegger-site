@@ -11,6 +11,8 @@ const files = [
   'think-biegger-og.svg',
 ];
 
+const dirs = ['videos'];
+
 fs.rmSync(dist, { recursive: true, force: true });
 fs.mkdirSync(dist, { recursive: true });
 
@@ -18,6 +20,13 @@ for (const file of files) {
   const source = path.join(root, file);
   if (fs.existsSync(source)) {
     fs.copyFileSync(source, path.join(dist, file));
+  }
+}
+
+for (const dir of dirs) {
+  const source = path.join(root, dir);
+  if (fs.existsSync(source)) {
+    fs.cpSync(source, path.join(dist, dir), { recursive: true });
   }
 }
 
